@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="quack.png">
+    <title>Quick Sort</title>
+</head>
+<body>
+    <h1>Ordenação com Quick Sort</h1>
+    <p>Insira uma lista de números separados por vírgula:</p>
+
+    <form id="quickSortForm">
+        <input type="text" id="inputNumbers" placeholder="Ex: 5, 2, 9, 3, 6, 1, 8, 4, 7" onkeydown="checkEnter(event)">
+        <button type="button" onclick="sortNumbers()">Ordenar</button>
+    </form>
+
+    <p>Resultado Ordenado:</p>
+    <div id="sortedNumbers"></div>
+
+    <script>
+        function sortNumbers() {
+            const inputNumbers = document.getElementById("inputNumbers").value;
+            const numbersArray = inputNumbers.split(',').map(Number);
+            const sortedArray = quickSort(numbersArray);
+            document.getElementById("sortedNumbers").textContent = sortedArray.join(', ');
+        }
+
+        function quickSort(arr) {
+            if (arr.length <= 1) {
+                return arr;
+            }
+
+            const pivot = arr[0];
+            const left = [];
+            const right = [];
+
+            for (let i = 1; i < arr.length; i++) {
+                if (arr[i] < pivot) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+
+            return [...quickSort(left), pivot, ...quickSort(right)];
+        }
+
+        function checkEnter(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Impedir que a tecla "Enter" adicione uma nova linha no campo de entrada
+                sortNumbers();
+            }
+        }
+    </script>
+</body>
+</html>
